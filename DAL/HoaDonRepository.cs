@@ -22,6 +22,9 @@ namespace DAL
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoa_don_create",
                 "@ID", model.ID,
+                "@Name", model.Name,
+                "@Adress", model.Adress,
+                "@Phone", model.Phone,
                 "@Payment", model.Payment,
                 "@Total", model.Total,
                 "@DateOrder", model.DateOrder,

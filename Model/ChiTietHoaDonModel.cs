@@ -5,9 +5,10 @@ namespace Model
 {
     public class ChiTietHoaDonModel
     {
-        public string ma_chi_tiet { get; set; }
-        public string ma_hoa_don { get; set; }
-        public string item_id { get; set; }
-        public int so_luong { get; set; }
+        public string ID { get; set; }
+        public string ID_bill { get; set; }
+        public int ID_product { get; set; }
+        public int Quantity { get; set; }
+        public float Unit_price { get; set; }
     }
 }

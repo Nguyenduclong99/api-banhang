@@ -21,9 +21,10 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoa_don_create",
-                "@ma_hoa_don", model.ma_hoa_don,
-                "@ho_ten", model.ho_ten,
-                "@dia_chi", model.dia_chi,
+                "@ID", model.ID,
+                "@Payment", model.Payment,
+                "@Total", model.Total,
+                "@DateOrder", model.DateOrder,
                 "@listjson_chitiet", model.listjson_chitiet != null ? MessageConvert.SerializeObject(model.listjson_chitiet) : null);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {

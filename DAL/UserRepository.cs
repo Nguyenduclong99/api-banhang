@@ -4,6 +4,7 @@ using Helper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System;
 
 namespace DAL
 {
@@ -15,33 +16,132 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<UserModel> _users = new List<UserModel>
+        public bool Create(UserModel model)
         {
-            new UserModel { Id = 1, Name = "Nguyễn Đức Long",  Username = "longphuong01", Role = Role.Admin },
-            new UserModel { Id = 2, Name = "Huệ", Username = "user", Password = "user", Role = Role.User },
-            new UserModel { Id = 3, Name = "Thảo",Username = "user1", Password = "user1", Role = Role.User },
-            new UserModel { Id = 4, Name = "Khôi", Username = "user2", Password = "user2", Role = Role.User }
-        }; 
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_user_create",
+                "@ID", model.ID,
+                "@Username", model.Username,
+                "@Password", model.Password,
+                "@Name", model.Name,
+                "@Token", model.Token,
+                "@Role", model.Role,
+                "@image_url", model.image_url);
+
+
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool Delete(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_user_delete",
+                "@user_id", id);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool Update(UserModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_user_update",
+                "@ID", model.ID,
+                "@Username", model.Username,
+                "@Password", model.Password,
+                "@Name", model.Name,
+                "@Token", model.Token,
+                "@Role", model.Role,
+                "@image_url", model.image_url);
+                
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public UserModel GetUser(string username, string password)
         {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
-            // return null if user not found
-            if (user == null)
-                return null;
-            return user; 
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_user_get_by_username_password",
+                     "@taikhoan", username,
+                     "@matkhau", password);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<UserModel>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public IEnumerable<UserModel> GetAll()
+        public UserModel GetDatabyID(string id)
         {
-            return _users.WithoutPasswords();
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_user_get_by_id",
+                     "@user_id", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<UserModel>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
-
-        public UserModel GetById(int id)
+        public List<UserModel> Search(int pageIndex, int pageSize, out long total, string hoten, string taikhoan)
         {
-            var user = _users.FirstOrDefault(x => x.Id == id);
-            return user.WithoutPassword();
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_user_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@hoten", hoten,
+                    "@taikhoan", taikhoan);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<UserModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

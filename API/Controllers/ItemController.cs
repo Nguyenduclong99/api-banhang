@@ -27,6 +27,21 @@ namespace API.Controllers
             _itemBusiness.Create(model);
             return model;
         }
+        [Route("update-item")]
+        [HttpPost]
+        public ItemModel Edit(int id, [FromBody] ItemModel model)
+        {
+            _itemBusiness.Edit(id, model);
+            return model;
+        }
+        [HttpGet]
+        [Route("delete/{id}")]
+
+        public bool Delete(int id)
+        {
+            return _itemBusiness.Delete(id);
+
+        }
 
         [Route("get-by-id/{id}")]
         [HttpGet]
@@ -50,10 +65,10 @@ namespace API.Controllers
             {
                 var page = int.Parse(formData["page"].ToString());
                 var pageSize = int.Parse(formData["pageSize"].ToString());
-                string item_group_id = "";
-                if (formData.Keys.Contains("item_group_id") && !string.IsNullOrEmpty(Convert.ToString(formData["item_group_id"]))) { item_group_id = Convert.ToString(formData["item_group_id"]); }
+                string category_id = "";
+                if (formData.Keys.Contains("category_id") && !string.IsNullOrEmpty(Convert.ToString(formData["category_id"]))) { category_id = Convert.ToString(formData["category_id"]); }
                 long total = 0;
-                var data = _itemBusiness.Search(page, pageSize,out total,  item_group_id);
+                var data = _itemBusiness.Search(page, pageSize,out total, category_id);
                 response.TotalItems = total;
                 response.Data = data;
                 response.Page = page;
@@ -64,6 +79,12 @@ namespace API.Controllers
                 throw new Exception(ex.Message);
             }
             return response;
+        }
+        [Route("get-item-related/{id}/{category_id}")]
+        [HttpGet]
+        public IEnumerable<ItemModel> GetProductRelated(int id, string category_id)
+        {
+            return _itemBusiness.GetProductRelated(id, category_id);
         }
 
     }

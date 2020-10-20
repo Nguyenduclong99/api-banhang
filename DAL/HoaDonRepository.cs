@@ -23,17 +23,50 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoa_don_create",
                 "@ID", model.ID,
                 "@Name", model.Name,
-                "@Adress", model.Adress,
+                "@Email", model.Email,
+                "@Address", model.Address,
                 "@Phone", model.Phone,
-                "@Payment", model.Payment,
                 "@Total", model.Total,
-                "@DateOrder", model.DateOrder,
+                "@Note", model.Note,
+                //"@DateOrder", model.DateOrder,
                 "@listjson_chitiet", model.listjson_chitiet != null ? MessageConvert.SerializeObject(model.listjson_chitiet) : null);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
                 }
                 return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<HoaDonModel> GetAllBill()
+        {
+
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_get_bill");
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<HoaDonModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ChiTietHoaDonModel GetBillByID(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_get_bill_detail", "@bill_id", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<ChiTietHoaDonModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {

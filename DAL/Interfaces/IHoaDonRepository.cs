@@ -8,5 +8,7 @@ namespace DAL
     public partial interface IHoaDonRepository
     {
         bool Create(HoaDonModel model);
+        List<HoaDonModel> GetAllBill();
+        ChiTietHoaDonModel GetBillByID(string id);
     }
 }

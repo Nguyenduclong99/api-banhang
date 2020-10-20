@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace Model
 {
-    public class CustomerModel
+     public class CustomerModel
     {
-        public string Email { get; set; }
-        public string Password { get; set; } 
+        public string Customer_email { get; set; }
+        public string Customer_password { get; set; }
     }
+           
 }

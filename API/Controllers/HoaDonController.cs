@@ -24,14 +24,26 @@ namespace API.Controllers
         [HttpPost]
         public HoaDonModel CreateItem([FromBody] HoaDonModel model)
         {
-            model.ma_hoa_don = Guid.NewGuid().ToString();
+            model.ID = Guid.NewGuid().ToString();
             if (model.listjson_chitiet != null)
             {
                 foreach(var item in model.listjson_chitiet)
-                    item.ma_chi_tiet = Guid.NewGuid().ToString();
+                    item.ID = Guid.NewGuid().ToString();
             }
             _hoaDonBusiness.Create(model);
             return model;
-        } 
+        }
+        [Route("get-bill")]
+        [HttpGet]
+        public List<HoaDonModel> GetBills()
+        {
+            return _hoaDonBusiness.GetAllBill();
+        }
+        [Route("get-bill-detail/{id}")]
+        [HttpGet]
+        public ChiTietHoaDonModel GetBillDetail(string id)
+        {
+            return _hoaDonBusiness.GetBillByID(id);
+        }
     }
 }

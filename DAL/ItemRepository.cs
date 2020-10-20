@@ -21,17 +21,62 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_item_create",
-                "@id", model.ID,
-                "@item_group_id", model.Catergory_id,
+                //"@id", model.ID,
+                "@Catergory_id", model.Catergory_id,
                 "@image", model.Image,
                 "@name", model.Name,
-                "@descrition", model.Description,
-                "@promotion_price", model.Promotion_price,
-                "@size", model.Size,
-                "@status", model.Status,
+                "@Description", model.Description,
+                "@Promotion_price", model.Promotion_price,
+                "@Status", model.Status,
+                "@Quantity", model.Quantity,
+                "@Unit_price", model.Unit_price);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool Edit(int id, ItemModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_update",
+                "@id", model.ID_product,
+                "@name", model.Name,
+                "@image", model.Image,
+                "@price", model.Unit_price,
                 "@quantity", model.Quantity,
-                "@created_at", model.Created_at,
-                "@unit_price", model.Unit_price);
+                "@promotion_price", model.Promotion_price,
+                "@catergory_id", model.Catergory_id,
+                "@description", model.Description,
+                "@status", model.Status
+              );
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool Delete(int id)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_delete",
+                "@id", id
+
+              );
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -48,8 +93,8 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_item_get_by_id",
-                     "@item_id", id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_product_get_by_id",
+                     "@id", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<ItemModel>().FirstOrDefault();
@@ -74,7 +119,7 @@ namespace DAL
                 throw ex;
             }
         }
-        public List<ItemModel> Search(int pageIndex, int pageSize, out long total, string item_group_id)
+        public List<ItemModel> Search(int pageIndex, int pageSize, out long total, string category_id)
         {
             string msgError = "";
             total = 0;
@@ -83,10 +128,29 @@ namespace DAL
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_item_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
-                    "@item_group_id", item_group_id);
+                    "@category_id", category_id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<ItemModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<ItemModel> GetProductRelated(int id, string category_id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_get_item_related",
+                    "@product_id", id,
+                    "@category_id", category_id
+
+                     );
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
                 return dt.ConvertTo<ItemModel>().ToList();
             }
             catch (Exception ex)

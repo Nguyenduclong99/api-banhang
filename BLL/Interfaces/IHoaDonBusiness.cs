@@ -8,5 +8,7 @@ namespace BLL
     public partial interface IHoaDonBusiness
     {
         bool Create(HoaDonModel model);
+        List<HoaDonModel> GetAllBill();
+        ChiTietHoaDonModel GetBillByID(string id);
     }
 }

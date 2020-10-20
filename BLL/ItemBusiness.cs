@@ -18,6 +18,14 @@ namespace BLL
         {
             return _res.Create(model);
         }
+        public bool Edit(int id, ItemModel model)
+        {
+            return _res.Edit(id, model);
+        }
+        public bool Delete(int id)
+        {
+            return _res.Delete(id);
+        }
         public ItemModel GetDatabyID(int id)
         {
             return _res.GetDatabyID(id);
@@ -26,9 +34,13 @@ namespace BLL
         {
             return _res.GetDataAll();
         }
-        public List<ItemModel> Search(int pageIndex, int pageSize, out long total, string item_group_id)
+        public List<ItemModel> Search(int pageIndex, int pageSize, out long total, string category_id)
         {
-            return _res.Search(pageIndex, pageSize, out total, item_group_id);
+            return _res.Search(pageIndex, pageSize, out total, category_id);
+        }
+        public List<ItemModel> GetProductRelated(int id, string category_id)
+        {
+            return _res.GetProductRelated(id, category_id);
         }
     }
 

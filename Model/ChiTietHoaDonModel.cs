@@ -8,8 +8,8 @@ namespace Model
         public string ID { get; set; }
         public string ID_bill { get; set; }
         public int ID_product { get; set; }
-        public int Quantity { get; set; }
         public float Unit_price { get; set; }
-        public string Product_name { get; set; }
+        public int quantity_sale { get; set; }      
+        public string name { get; set; }
     }
 }

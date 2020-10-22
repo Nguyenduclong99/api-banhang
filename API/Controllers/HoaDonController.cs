@@ -41,9 +41,16 @@ namespace API.Controllers
         }
         [Route("get-bill-detail/{id}")]
         [HttpGet]
-        public ChiTietHoaDonModel GetBillDetail(string id)
+        public List<ChiTietHoaDonModel> GetBillDetail(string id)
         {
             return _hoaDonBusiness.GetBillByID(id);
+        }
+
+        [Route("delete-bill/{id}")]
+        [HttpGet]
+        public bool Delet(string id)
+        {
+            return _hoaDonBusiness.Delete(id);
         }
     }
 }

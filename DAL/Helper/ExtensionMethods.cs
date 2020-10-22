@@ -19,7 +19,7 @@ namespace Helper
         {
             if (user == null) return null;
 
-            user.Password = null;
+            user.matkhau = null;
             return user;
         }
     }

@@ -41,6 +41,27 @@ namespace DAL
                 throw ex;
             }
         }
+
+                public bool Delete(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_bill_delete",
+                "@id", id);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+
+            }
+              
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<HoaDonModel> GetAllBill()
         {
 
@@ -58,15 +79,15 @@ namespace DAL
             }
         }
 
-        public ChiTietHoaDonModel GetBillByID(string id)
+        public List<ChiTietHoaDonModel > GetBillByID(string id)
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_get_bill_detail", "@bill_id", id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_get_bill_detail", "@id_bill", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<ChiTietHoaDonModel>().FirstOrDefault();
+                return dt.ConvertTo<ChiTietHoaDonModel>().ToList();
             }
             catch (Exception ex)
             {

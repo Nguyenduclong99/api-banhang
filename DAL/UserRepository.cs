@@ -22,15 +22,16 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_user_create",
-                "@ID", model.ID,
-                "@Username", model.Username,
-                "@Password", model.Password,
-                "@Name", model.Name,
-                "@Token", model.Token,
-                "@Role", model.Role,
+                "@user_id", model.user_id,
+                "@hoten", model.hoten,
+                "@ngaysinh", model.ngaysinh,
+                "@diachi", model.diachi,
+                "@gioitinh", model.gioitinh,
+                "@email", model.email,
+                "@taikhoan", model.taikhoan,
+                "@matkhau", model.matkhau,
+                "@role", model.role,
                 "@image_url", model.image_url);
-
-
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -67,14 +68,16 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_user_update",
-                "@ID", model.ID,
-                "@Username", model.Username,
-                "@Password", model.Password,
-                "@Name", model.Name,
-                "@Token", model.Token,
-                "@Role", model.Role,
+                "@user_id", model.user_id,
+                "@hoten", model.hoten,
+                "@ngaysinh", model.ngaysinh,
+                "@diachi", model.diachi,
+                "@gioitinh", model.gioitinh,
+                "@email", model.email,
+                "@taikhoan", model.taikhoan,
+                "@matkhau", model.matkhau,
+                "@role", model.role,
                 "@image_url", model.image_url);
-                
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);

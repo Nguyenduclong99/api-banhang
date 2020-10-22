@@ -12,7 +12,7 @@ using Model;
 
 namespace API.Controllers
 {
-  //  [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -87,7 +87,7 @@ namespace API.Controllers
                     SaveFileFromBase64String(savePath, arrData[2]);
                 }
             }
-            model.ID = Guid.NewGuid().ToString();
+            model.user_id = Guid.NewGuid().ToString();
             _userBusiness.Create(model);
             return model;
         }
@@ -109,7 +109,7 @@ namespace API.Controllers
             _userBusiness.Create(model);
             return model;
         }
-        [AllowAnonymous]
+
         [Route("get-by-id/{id}")]
         [HttpGet]
         public UserModel GetDatabyID(string id)

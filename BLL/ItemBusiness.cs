@@ -42,6 +42,14 @@ namespace BLL
         {
             return _res.GetProductRelated(id, category_id);
         }
+        public List<ItemModel> SanPhamBanCham()
+        {
+            return _res.SanPhamBanCham();
+        }
+        public List<ItemModel> SanPhamBanChay()
+        {
+            return _res.SanPhamBanChay();
+        }
     }
 
 }

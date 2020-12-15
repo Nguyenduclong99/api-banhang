@@ -10,6 +10,8 @@ namespace DAL
         bool Create(HoaDonModel model);
         bool Delete(string id);
         List<HoaDonModel> GetAllBill();
+        List<ChiTietHoaDonModel> GetAllBillDetails();
         List<ChiTietHoaDonModel> GetBillByID(string id);
+        Thang ThongKeDoanhThuTheoThang();
     }
 }

@@ -11,5 +11,7 @@ namespace BLL
         bool Delete(string id);
         List<HoaDonModel> GetAllBill();
         List<ChiTietHoaDonModel> GetBillByID(string id);
+        List<ChiTietHoaDonModel> GetAllBillDetails();
+        Thang ThongKeDoanhThuTheoThang();
     }
 }

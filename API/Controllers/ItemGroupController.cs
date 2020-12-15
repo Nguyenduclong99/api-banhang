@@ -19,7 +19,6 @@ namespace API.Controllers
         {
             _itemGroupBusiness = itemGroupBusiness;
         }
-
         [Route("get-menu")]
         [HttpGet]
         public IEnumerable<ItemGroupModel> GetAllMenu()

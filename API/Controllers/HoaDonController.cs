@@ -45,12 +45,23 @@ namespace API.Controllers
         {
             return _hoaDonBusiness.GetBillByID(id);
         }
-
+        [Route("get-billdetail")]
+        [HttpGet]
+        public List<ChiTietHoaDonModel> GetBillDetail()
+        {
+            return _hoaDonBusiness.GetAllBillDetails();
+        }
         [Route("delete-bill/{id}")]
         [HttpGet]
         public bool Delet(string id)
         {
             return _hoaDonBusiness.Delete(id);
+        }
+        [Route("doanh-thu-theo-thang")]
+        [HttpGet]
+        public Thang DoanhThuTheoThang()
+        {
+            return _hoaDonBusiness.ThongKeDoanhThuTheoThang();
         }
     }
 }

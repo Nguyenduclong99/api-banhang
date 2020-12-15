@@ -31,6 +31,14 @@ namespace BLL
         {
             return _res.GetBillByID(id);
         }
+        public List<ChiTietHoaDonModel> GetAllBillDetails()
+        {
+            return _res.GetAllBillDetails();
+        }
+        public Thang ThongKeDoanhThuTheoThang()
+        {
+            return _res.ThongKeDoanhThuTheoThang();
+        }
     }
 
 }

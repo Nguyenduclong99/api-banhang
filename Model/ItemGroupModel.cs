@@ -12,5 +12,6 @@ namespace Model
         public short? Seq_num { get; set; }
         public List<ItemGroupModel> children { get; set; }
         public string type { get; set; }
+        public DateTime created_at { get; set; }
     }
 }

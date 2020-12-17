@@ -12,6 +12,5 @@ namespace DAL
         List<HoaDonModel> GetAllBill();
         List<ChiTietHoaDonModel> GetAllBillDetails();
         List<ChiTietHoaDonModel> GetBillByID(string id);
-        Thang ThongKeDoanhThuTheoThang();
     }
 }

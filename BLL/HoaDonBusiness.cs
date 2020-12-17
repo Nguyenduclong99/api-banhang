@@ -35,10 +35,6 @@ namespace BLL
         {
             return _res.GetAllBillDetails();
         }
-        public Thang ThongKeDoanhThuTheoThang()
-        {
-            return _res.ThongKeDoanhThuTheoThang();
-        }
     }
 
 }

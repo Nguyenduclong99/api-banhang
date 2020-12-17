@@ -14,10 +14,6 @@ namespace BLL
         List<ItemModel> GetDataAll();
         List<ItemModel> Search(int pageIndex, int pageSize, out long total, string category_id);
         List<ItemModel> GetProductRelated(int id, string category_id);
-        List<ItemModel> SanPhamBanCham();
-        List<ItemModel> SanPhamBanChay();
-
-
     }
 
 }

@@ -68,7 +68,7 @@ namespace API.Controllers
             _itemBusiness.Create(model);
             return model;
         }
-        [Route("update-item")]
+        [Route("update-item/{id}")]
         [HttpPost]
         public ItemModel Edit(int id, [FromBody] ItemModel model)
         {
@@ -107,21 +107,6 @@ namespace API.Controllers
         {
             return _itemBusiness.GetDataAll();
         }
-
-        [Route("get-san-pham-ban-cham")]
-        [HttpGet]
-        public IEnumerable<ItemModel> SanPhamBanCham()
-        {
-            return _itemBusiness.SanPhamBanCham();
-        }
-
-        [Route("get-san-pham-ban-chay")]
-        [HttpGet]
-        public IEnumerable<ItemModel> SanPhamBanChay()
-        {
-            return _itemBusiness.SanPhamBanChay();
-        }
-
         [Route("search")]
         [HttpPost]
         public ResponseModel Search([FromBody] Dictionary<string, object> formData)

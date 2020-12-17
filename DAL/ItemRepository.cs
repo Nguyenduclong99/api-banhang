@@ -50,7 +50,7 @@ namespace DAL
                 "@id", model.ID_product,
                 "@name", model.Name,
                 "@image", model.Image,
-                "@price", model.Unit_price,
+                "@unit_price", model.Unit_price,
                 "@quantity", model.Quantity,
                 "@promotion_price", model.Promotion_price,
                 "@catergory_id", model.Catergory_id,
@@ -149,36 +149,6 @@ namespace DAL
                     "@category_id", category_id
 
                      );
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
-                return dt.ConvertTo<ItemModel>().ToList();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public List<ItemModel> SanPhamBanCham()
-        {
-            string msgError = "";
-            try
-            {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_thongke_sp_bancham");
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
-                return dt.ConvertTo<ItemModel>().ToList();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public List<ItemModel> SanPhamBanChay()
-        {
-            string msgError = "";
-            try
-            {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_thongke_sp_banchay");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<ItemModel>().ToList();

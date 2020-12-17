@@ -12,6 +12,5 @@ namespace BLL
         List<HoaDonModel> GetAllBill();
         List<ChiTietHoaDonModel> GetBillByID(string id);
         List<ChiTietHoaDonModel> GetAllBillDetails();
-        Thang ThongKeDoanhThuTheoThang();
     }
 }

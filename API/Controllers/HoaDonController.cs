@@ -57,11 +57,6 @@ namespace API.Controllers
         {
             return _hoaDonBusiness.Delete(id);
         }
-        [Route("doanh-thu-theo-thang")]
-        [HttpGet]
-        public Thang DoanhThuTheoThang()
-        {
-            return _hoaDonBusiness.ThongKeDoanhThuTheoThang();
-        }
+        
     }
 }

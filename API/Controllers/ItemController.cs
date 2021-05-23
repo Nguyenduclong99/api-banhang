@@ -107,18 +107,18 @@ namespace API.Controllers
         {
             return _itemBusiness.GetDataAll();
         }
-        [Route("get-san-pham-ban-chay")]
-        [HttpGet]
-        public IEnumerable<ItemModel> SanPhamBanChay()
-        {
-            return _itemBusiness.SanPhamBanChay();
-        }
-        [Route("get-san-pham-ban-cham")]
-        [HttpGet]
-        public IEnumerable<ItemModel> SanPhamBanCham()
-        {
-            return _itemBusiness.SanPhamBanCham();
-        }
+        //[Route("get-san-pham-ban-chay")]
+        //[HttpGet]
+        //public IEnumerable<ItemModel> SanPhamBanChay()
+        //{
+        //    return _itemBusiness.SanPhamBanChay();
+        //}
+        //[Route("get-san-pham-ban-cham")]
+        //[HttpGet]
+        //public IEnumerable<ItemModel> SanPhamBanCham()
+        //{
+        //    return _itemBusiness.SanPhamBanCham();
+        //}
         [Route("search")]
         [HttpPost]
         public ResponseModel Search([FromBody] Dictionary<string, object> formData)
